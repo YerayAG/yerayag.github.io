@@ -72,6 +72,8 @@ main {
     border-radius: 5px;
     padding: 1rem;
     width: calc(50% - 0.5rem);
+    transition: all 1s ease;
+    overflow: hidden;
 }
 
 .project h4 {
@@ -79,35 +81,41 @@ main {
     text-align: center;
 }
 
-/* Cambios para animar la descripción */
 .project-details {
-    max-height: 0; /* Ocultar inicialmente */
-    overflow: hidden; /* Evitar desbordamiento */
-    opacity: 0; /* Hacer invisible */
-    transition: max-height 0.5s ease-out, opacity 0.5s ease-out; /* Transición suave */
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 1s ease, opacity 1s ease;
+    overflow: hidden;
 }
 
 .project:hover .project-details {
-   max-height: 100px; /* Ajustar según sea necesario */
-   opacity: 1; /* Hacer visible */
+    max-height: 300px;
+    opacity: 1;
 }
 
 .project-details p {
-   margin-bottom: 1rem; /* Espaciado inferior para la descripción */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .project-button {
-   display: inline-block;
-   background-color: #33ff33; /* Color de fondo del botón */
-   color: #000; /* Color del texto del botón */
-   padding: 0.5rem 1rem; /* Espaciado interno del botón */
-   border-radius: 5px; /* Bordes redondeados */
-   text-decoration: none; /* Sin subrayado */
-   transition: all 0.3s ease; /* Transición suave al pasar el cursor */
+    display: inline-block;
+    background-color: #33ff33;
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease; /* Mantener esta transición en 0.3s */
 }
 
 .project-button:hover {
-   background-color: #2bff2b; /* Color de fondo al pasar el cursor */
+    background-color: #2bff2b; /* Color de fondo al pasar el cursor */
+}
+
+@media (max-width: 768px) {
+    .project {
+        width: 100%;
+    }
 }
 
 footer {
@@ -141,8 +149,8 @@ footer {
     left: 20px;
     background-color: #33ff33;
     color: #000;
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
