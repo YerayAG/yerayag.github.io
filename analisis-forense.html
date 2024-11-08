@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Forense Informático</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #4299e1;
+            --card-hover: #3182ce;
+            --card-text: #ffffff;
+            --accent-color: #3182ce;
+            --stripe-height: 60px;
+        }
+
+        .dark-mode {
+            --bg-color: #18181b;
+            --text-color: #ffffff;
+            --card-bg: #000000;
+            --card-hover: #27272a;
+            --card-text: #ffffff;
+            --accent-color: #000000;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-stripe, .bottom-stripe {
+            height: var(--stripe-height);
+            background-color: var(--accent-color);
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .bottom-stripe {
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            align-self: flex-start;
+        }
+
+        .topics-container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .topic {
+            background-color: var(--card-bg);
+            color: var(--card-text);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        .topic h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .project {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--card-bg);
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .project-description {
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+            overflow: hidden;
+        }
+
+        .project:hover .project-description {
+            max-height: 100px;
+            opacity: 1;
+        }
+
+        .project:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle, .home-link {
+            background-color: var(--bg-color);
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 30px;
+            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .theme-toggle:hover, .home-link:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        footer {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .topic h2 {
+                font-size: 1.3rem;
+            }
+
+            .theme-toggle, .home-link {
+                font-size: 20px;
+                padding: 3px 10px;
+            }
+
+            :root {
+                --stripe-height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-stripe">
+        <a href="index.html" class="home-link">🏠</a>
+        <button class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+    <div class="container">
+        <h1>ㅤAnálisis Forense Informáticoㅤ</h1>
+        <div class="topics-container">
+            <div class="topic">
+                <h2>Tema 1: Evidence Acquisition and Preservation</h2>
+                <div class="project" onclick="window.open('https://github.com/IES-Rafael-Alberti/P01-G01---Analisis-Forense', '_blank');">
+                    <div class="project-title">Proyecto 1</div>
+                    <div class="project-description">Development of a Forensic Analysis Methodology.</div>
+                </div>
+                <div class="project" onclick="window.open('https://yerayag.github.io/A05-analisis-forense/', '_blank');">
+                    <div class="project-title">Proyecto A05</div>
+                    <div class="project-description">Poryecto de Adquisicion de una memoria USB.</div>
+                </div>
+                <div class="project" onclick="window.open('#', '_blank');">
+                    <div class="project-title">Proyecto 2</div>
+                    <div class="project-description">Coming Soon.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-stripe">
+        <footer>
+            © 2024 Yeray Almoguera González. Todos los derechos reservados.
+        </footer>
+    </div>
+
+    <script>
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        function setTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+            }
+            localStorage.setItem('darkMode', isDark);
+            updateThemeToggleText();
+        }
+
+        function updateThemeToggleText() {
+            themeToggle.textContent = body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = !body.classList.contains('dark-mode');
+            setTheme(isDark);
+        });
+
+        const savedTheme = localStorage.getItem('darkMode');
+        setTheme(savedTheme === 'true');
+    </script>
+</body>
+</html>

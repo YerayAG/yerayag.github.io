@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeray Almoguera González</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #4299e1;
+            --card-hover: #3182ce;
+            --card-text: #ffffff;
+            --accent-color: #3182ce;
+            --stripe-height: 60px;
+        }
+
+        .dark-mode {
+            --bg-color: #18181b;
+            --text-color: #ffffff;
+            --card-bg: #000000;
+            --card-hover: #27272a;
+            --card-text: #ffffff;
+            --accent-color: #000000;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-stripe, .bottom-stripe {
+            height: var(--stripe-height);
+            background-color: var(--accent-color);
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 20px;
+        }
+
+        .bottom-stripe {
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-grow: 1;
+        }
+
+        .content {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            gap: 100px;
+        }
+
+        .header {
+            flex: 1;
+            padding-right: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            white-space: nowrap;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-top: 0;
+        }
+
+        .subjects {
+            flex: 1;
+            max-width: 550px;
+        }
+
+        .subject-card {
+            background-color: var(--card-bg);
+            color: var(--card-text);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-align:center;
+            width :100%;
+            text-decoration:none;
+            display:block;
+        }
+
+        .subject-card:hover {
+            background-color :var(--card-hover);
+            transform :scale(1.05);
+            box-shadow :0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .subject-card :active {
+            transform :scale(0.95);
+        }
+
+        .theme-toggle {
+            background-color :var(--bg-color);
+            border :2px solid var(--text-color);
+            color :var(--text-color);
+            font-size :24px;
+            cursor:pointer;
+            border-radius :30px;
+            padding :5px 15px;
+            display:flex;
+            align-items:center;
+            transition :all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color :var(--text-color);
+            color :var(--bg-color);
+        }
+
+        footer {
+            font-size :0.9rem;
+            color :var(--text-color);
+        }
+
+        @media (max-width :768px) {
+            .container {
+                padding :20px 10px;
+            }
+
+            .content {
+                flex-direction :column;
+                align-items:center;
+                gap :60px;
+            }
+            
+            .header {
+                width :100%;
+                max-width:none;
+                padding-right :0;
+                margin-bottom :0;
+                text-align:center;
+            }
+
+            h1 {
+                font-size :2rem;
+                white-space :normal;
+            }
+
+            h2 {
+                font-size :1.2rem;
+            }
+
+            .theme-toggle {
+                font-size :20px;
+                padding :3px 10px;
+            }
+
+            .subject-card {
+                padding :25px;
+                font-size :1.2rem;
+            }
+
+            :root {
+                --stripe-height :50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-stripe">
+        <button class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+    <div class="container">
+        <div class="content">
+            <div class="header">
+                <h1>Yeray Almoguera González</h1>
+                <h2>Ciberseguridad</h2>
+            </div>
+            <div class="subjects">
+                <a href="bastionado.html" class="subject-card">Bastionado de Redes y Sistemas</a>
+                <a href="analisis-forense.html" class="subject-card">Análisis Forense Informático</a>
+                <a href="hacking-etico.html" class="subject-card">Hacking Ético</a>
+                <a href="incidentes.html" class="subject-card">Incidentes de Ciberseguridad</a>
+                <a href="produccion-segura.html" class="subject-card">Puesta en Producción Segura</a>
+                <a href="normativa.html" class="subject-card">Normativa de Ciberseguridad</a>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-stripe">
+        <footer>
+            © 2024 Yeray Almoguera González. Todos los derechos reservados.
+        </footer>
+    </div>
+
+    <script>
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        function setTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+            }
+            localStorage.setItem('darkMode', isDark);
+            updateThemeToggleText();
+        }
+
+        function updateThemeToggleText() {
+            themeToggle.textContent = body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = !body.classList.contains('dark-mode');
+            setTheme(isDark);
+        });
+
+        const savedTheme = localStorage.getItem('darkMode');
+        setTheme(savedTheme === 'true');
+    </script>
+</body>
+</html>
