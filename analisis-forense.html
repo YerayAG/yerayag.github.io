@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Módulo de Análisis Forense Informático - Curso de Ciberseguridad">
+    <meta name="keywords" content="análisis forense, forensics, evidencias digitales, ciberseguridad">
     <title>Análisis Forense Informático</title>
     <style>
         :root {
@@ -13,41 +15,41 @@
             --card-text: #ffffff;
             --accent-color: #3182ce;
             --stripe-height: 60px;
+            --font-primary: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-secondary: 'Georgia', serif;
         }
 
         .dark-mode {
             --bg-color: #18181b;
             --text-color: #ffffff;
-            --card-bg: #000000;
-            --card-hover: #27272a;
+            --card-bg: #2d3748;
+            --card-hover: #4a5568;
             --card-text: #ffffff;
-            --accent-color: #000000;
+            --accent-color: #2d3748;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: var(--font-primary);
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
             color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
+            transition: all 0.5s ease;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            line-height: 1.6;
         }
 
         .top-stripe, .bottom-stripe {
             height: var(--stripe-height);
             background-color: var(--accent-color);
-            transition: background-color 0.3s;
+            transition: background-color 0.5s ease;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
-        }
-
-        .bottom-stripe {
-            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .container {
@@ -58,12 +60,35 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
+            font-family: var(--font-secondary);
             font-size: 2.5rem;
             margin-bottom: 40px;
-            align-self: flex-start;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        h1:hover::after {
+            width: 150px;
         }
 
         .topics-container {
@@ -72,57 +97,105 @@
         }
 
         .topic {
-            background-color: var(--card-bg);
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-hover) 100%);
+            border-left: 5px solid var(--accent-color);
             color: var(--card-text);
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: slideIn 0.6s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .topic:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
         .topic h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
         }
 
         .project {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            border: 1px solid var(--card-bg);
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 5px;
+            background: var(--bg-color);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            animation: fadeIn 0.5s ease-out forwards;
+            color: var(--text-color);
+        }
+
+        .project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .project:hover::before {
+            transform: translateX(100%);
         }
 
         .project-title {
             font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
+
+        .project-title::before {
+            content: '📋';
+            margin-right: 10px;
+            font-size: 1.3em;
+            transition: transform 0.3s ease;
+        }
+
+        .project:hover .project-title::before {
+            transform: scale(1.2) rotate(360deg);
         }
 
         .project-description {
+            color: var(--text-color);
             max-height: 0;
             opacity: 0;
-            transition: max-height 0.5s ease, opacity 0.5s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
+            font-size: 0.95rem;
+        }
+
+        .project:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .project:hover .project-description {
             max-height: 100px;
             opacity: 1;
-        }
-
-        .project:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            padding-left: 20px;
         }
 
         .theme-toggle, .home-link {
-            background-color: var(--bg-color);
-            border: 2px solid var(--text-color);
-            color: var(--text-color);
+            background-color: transparent;
+            border: 2px solid var(--bg-color);
+            color: var(--bg-color);
             font-size: 24px;
             cursor: pointer;
             border-radius: 30px;
@@ -134,18 +207,36 @@
         }
 
         .theme-toggle:hover, .home-link:hover {
-            background-color: var(--text-color);
-            color: var(--bg-color);
+            background-color: var(--bg-color);
+            color: var(--accent-color);
+            transform: scale(1.05);
         }
 
-        footer {
-            font-size: 0.9rem;
-            color: var(--text-color);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 20px 10px;
+                padding: 20px 15px;
             }
 
             h1 {
@@ -153,17 +244,32 @@
             }
 
             .topic h2 {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
+            }
+
+            .project {
+                padding: 15px;
             }
 
             .theme-toggle, .home-link {
                 font-size: 20px;
                 padding: 3px 10px;
             }
+        }
 
-            :root {
-                --stripe-height: 50px;
-            }
+        .dark-mode .project {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.1;
         }
     </style>
 </head>
@@ -173,7 +279,7 @@
         <button class="theme-toggle" aria-label="Cambiar tema">🌙</button>
     </div>
     <div class="container">
-        <h1>ㅤAnálisis Forense Informáticoㅤ</h1>
+        <h1>Análisis Forense Informático</h1>
         <div class="topics-container">
             <div class="topic">
                 <h2>Tema 1: Evidence Acquisition and Preservation</h2>
@@ -183,7 +289,7 @@
                 </div>
                 <div class="project" onclick="window.open('https://yerayag.github.io/A05-analisis-forense/', '_blank');">
                     <div class="project-title">Proyecto A05</div>
-                    <div class="project-description">Poryecto de Adquisicion de una memoria USB.</div>
+                    <div class="project-description">Proyecto de Adquisición de una memoria USB.</div>
                 </div>
                 <div class="project" onclick="window.open('#', '_blank');">
                     <div class="project-title">Proyecto 2</div>
@@ -193,9 +299,7 @@
         </div>
     </div>
     <div class="bottom-stripe">
-        <footer>
-            © 2024 Yeray Almoguera González. Todos los derechos reservados.
-        </footer>
+        <footer>© 2024 Yeray Almoguera González. Todos los derechos reservados.</footer>
     </div>
 
     <script>
@@ -223,6 +327,49 @@
 
         const savedTheme = localStorage.getItem('darkMode');
         setTheme(savedTheme === 'true');
+
+        // Animación para los proyectos
+        document.querySelectorAll('.project').forEach((project, index) => {
+            project.style.animationDelay = `${index * 0.2}s`;
+        });
+
+        document.querySelectorAll('.project').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / card.offsetWidth) * 100;
+                const y = ((e.clientY - rect.top) / card.offsetHeight) * 100;
+                card.style.setProperty('--x', `${x}%`);
+                card.style.setProperty('--y', `${y}%`);
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.querySelector('.loader').classList.add('hidden');
+        });
+    </script>
+
+    <div id="particles-js"></div>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80 },
+                color: { value: getComputedStyle(document.documentElement).getPropertyValue('--accent-color') },
+                opacity: { value: 0.5 },
+                size: { value: 3 },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: getComputedStyle(document.documentElement).getPropertyValue('--accent-color'),
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2
+                }
+            }
+        });
     </script>
 </body>
 </html>

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yeray Almoguera González</title>
+    <meta name="theme-color" content="#4299e1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
     <style>
         :root {
             --bg-color: #ffffff;
@@ -13,19 +17,22 @@
             --card-text: #ffffff;
             --accent-color: #3182ce;
             --stripe-height: 60px;
+            --font-primary: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-secondary: 'Georgia', serif;
         }
 
         .dark-mode {
             --bg-color: #18181b;
             --text-color: #ffffff;
-            --card-bg: #000000;
-            --card-hover: #27272a;
+            --card-bg: #2d3748;
+            --card-hover: #4a5568;
             --card-text: #ffffff;
-            --accent-color: #000000;
+            --accent-color: #2d3748;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: var(--font-primary);
+            line-height: 1.6;
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
@@ -44,6 +51,7 @@
             align-items: center;
             justify-content: flex-end;
             padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .bottom-stripe {
@@ -56,6 +64,17 @@
             padding: 40px 20px;
             display: flex;
             flex-grow: 1;
+            animation: fadeIn 0.8s ease-out;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .content {
@@ -73,9 +92,29 @@
         }
 
         h1 {
+            font-family: var(--font-secondary);
+            letter-spacing: -0.5px;
             font-size: 2.5rem;
             margin-bottom: 10px;
             white-space: nowrap;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        h1:hover::after {
+            width: 150px;
         }
 
         h2 {
@@ -90,7 +129,8 @@
         }
 
         .subject-card {
-            background-color: var(--card-bg);
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-hover) 100%);
+            border-left: 5px solid var(--accent-color);
             color: var(--card-text);
             padding: 30px;
             margin-bottom: 25px;
@@ -98,18 +138,50 @@
             font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             text-align:center;
             width :100%;
             text-decoration:none;
             display:block;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out forwards;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .subject-card:hover::before {
+            transform: translateX(100%);
         }
 
         .subject-card:hover {
-            background-color :var(--card-hover);
+            background: linear-gradient(135deg, var(--card-hover) 0%, var(--card-bg) 100%);
+            border-left-width: 10px;
             transform :scale(1.05);
-            box-shadow :0 4px 6px rgba(0,0,0,0.1);
+            box-shadow :0 6px 12px rgba(0,0,0,0.15);
         }
 
         .subject-card :active {
@@ -117,21 +189,22 @@
         }
 
         .theme-toggle {
-            background-color :var(--bg-color);
-            border :2px solid var(--text-color);
-            color :var(--text-color);
-            font-size :24px;
-            cursor:pointer;
-            border-radius :30px;
-            padding :5px 15px;
-            display:flex;
-            align-items:center;
-            transition :all 0.3s ease;
+            background-color: transparent;
+            border: 2px solid var(--bg-color);
+            color: var(--bg-color);
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 30px;
+            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
         }
 
         .theme-toggle:hover {
-            background-color :var(--text-color);
-            color :var(--bg-color);
+            background-color: var(--bg-color);
+            color: var(--accent-color);
+            transform: scale(1.05);
         }
 
         footer {
@@ -181,9 +254,218 @@
                 --stripe-height :50px;
             }
         }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--card-bg);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 30px 15px;
+            }
+
+            .content {
+                gap: 60px;
+            }
+
+            .subject-card {
+                padding: 25px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .content {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+            
+            .header {
+                width: 100%;
+                max-width: none;
+                padding-right: 0;
+                margin-bottom: 0;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                white-space: normal;
+                margin-bottom: 15px;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+                color: var(--text-color);
+            }
+
+            .subjects {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .subject-card {
+                padding: 20px;
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+
+            .theme-toggle {
+                font-size: 18px;
+                padding: 3px 10px;
+            }
+
+            :root {
+                --stripe-height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px 10px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                padding-bottom: 10px;
+            }
+
+            h1::after {
+                width: 80px;
+            }
+
+            h1:hover::after {
+                width: 120px;
+            }
+
+            h2 {
+                font-size: 1rem;
+            }
+
+            .subject-card {
+                padding: 15px;
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+
+            .top-stripe, .bottom-stripe {
+                padding: 0 15px;
+            }
+
+            footer {
+                font-size: 0.8rem;
+                text-align: center;
+            }
+
+            .loader .spinner {
+                width: 40px;
+                height: 40px;
+                border-width: 4px;
+            }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .container {
+                padding: 15px;
+            }
+
+            .content {
+                gap: 30px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+                margin-bottom: 5px;
+            }
+
+            .subject-card {
+                padding: 15px;
+                margin-bottom: 10px;
+            }
+
+            .top-stripe, .bottom-stripe {
+                height: 40px;
+            }
+        }
+
+        @media (min-width: 1440px) {
+            .container {
+                max-width: 1400px;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .subject-card {
+                font-size: 1.4rem;
+                padding: 35px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.1;
+        }
     </style>
 </head>
 <body>
+    <div class="loader">
+        <div class="spinner"></div>
+    </div>
     <div class="top-stripe">
         <button class="theme-toggle" aria-label="Cambiar tema">🌙</button>
     </div>
@@ -208,6 +490,8 @@
             © 2024 Yeray Almoguera González. Todos los derechos reservados.
         </footer>
     </div>
+
+    <div id="particles-js"></div>
 
     <script>
         const themeToggle = document.querySelector('.theme-toggle');
@@ -234,6 +518,46 @@
 
         const savedTheme = localStorage.getItem('darkMode');
         setTheme(savedTheme === 'true');
+
+        window.addEventListener('load', () => {
+            document.querySelector('.loader').classList.add('hidden');
+        });
+
+        document.querySelectorAll('.subject-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        document.querySelectorAll('.subject-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / card.offsetWidth) * 100;
+                const y = ((e.clientY - rect.top) / card.offsetHeight) * 100;
+                card.style.setProperty('--x', `${x}%`);
+                card.style.setProperty('--y', `${y}%`);
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80 },
+                color: { value: getComputedStyle(document.documentElement).getPropertyValue('--accent-color') },
+                opacity: { value: 0.5 },
+                size: { value: 3 },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: getComputedStyle(document.documentElement).getPropertyValue('--accent-color'),
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2
+                }
+            }
+        });
     </script>
 </body>
 </html>
