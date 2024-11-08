@@ -55,13 +55,13 @@
         }
 
         .bottom-stripe {
-            justify-content: center;
+            display: none;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 20px;
             display: flex;
             flex-grow: 1;
             animation: fadeIn 0.8s ease-out;
@@ -82,7 +82,7 @@
             width: 100%;
             justify-content: center;
             align-items: center;
-            gap: 100px;
+            gap: 50px;
         }
 
         .header {
@@ -94,8 +94,8 @@
         h1 {
             font-family: var(--font-secondary);
             letter-spacing: -0.5px;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-bottom: 5px;
             white-space: nowrap;
             position: relative;
             padding-bottom: 15px;
@@ -118,9 +118,10 @@
         }
 
         h2 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #666;
             margin-top: 0;
+            margin-bottom: 10px;
         }
 
         .subjects {
@@ -132,10 +133,10 @@
             background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-hover) 100%);
             border-left: 5px solid var(--accent-color);
             color: var(--card-text);
-            padding: 30px;
-            margin-bottom: 25px;
+            padding: 20px;
+            margin-bottom: 15px;
             border-radius: 10px;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -307,13 +308,13 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 20px 15px;
+                padding: 15px 10px;
             }
 
             .content {
                 flex-direction: column;
                 align-items: center;
-                gap: 40px;
+                gap: 30px;
             }
             
             .header {
@@ -340,9 +341,9 @@
             }
 
             .subject-card {
-                padding: 20px;
+                padding: 15px;
                 font-size: 1.1rem;
-                margin-bottom: 15px;
+                margin-bottom: 12px;
             }
 
             .theme-toggle {
@@ -429,7 +430,7 @@
             }
 
             h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
             h2 {
@@ -437,8 +438,8 @@
             }
 
             .subject-card {
-                font-size: 1.4rem;
-                padding: 35px;
+                font-size: 1.2rem;
+                padding: 25px;
             }
         }
 
@@ -484,11 +485,6 @@
                 <a href="normativa.html" class="subject-card">Normativa de Ciberseguridad</a>
             </div>
         </div>
-    </div>
-    <div class="bottom-stripe">
-        <footer>
-            © 2024 Yeray Almoguera González. Todos los derechos reservados.
-        </footer>
     </div>
 
     <div id="particles-js"></div>
