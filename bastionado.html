@@ -39,6 +39,7 @@
             display: flex;
             flex-direction: column;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .top-stripe, .bottom-stripe {
@@ -60,7 +61,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: fadeIn 0.8s ease-out;
+            animation: none;
             position: relative;
             z-index: 1;
         }
@@ -131,7 +132,8 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+            animation: fadeInProject 0.5s ease-out forwards;
             color: var(--text-color);
         }
 
@@ -215,22 +217,22 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(20px) translateX(0);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) translateX(0);
             }
         }
 
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateX(-50px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateY(0);
             }
         }
 
@@ -270,6 +272,17 @@
         .dark-mode .project {
             background: rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes fadeInProject {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>

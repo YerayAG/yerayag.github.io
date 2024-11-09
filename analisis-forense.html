@@ -39,6 +39,7 @@
             display: flex;
             flex-direction: column;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .top-stripe, .bottom-stripe {
@@ -60,7 +61,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: fadeIn 0.8s ease-out;
+            animation: none;
             position: relative;
             z-index: 1;
         }
@@ -131,8 +132,9 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            animation: fadeIn 0.5s ease-out forwards;
+            animation: fadeInProject 0.5s ease-out forwards;
             color: var(--text-color);
+            opacity: 0;
         }
 
         .project::before {
@@ -212,10 +214,10 @@
             transform: scale(1.05);
         }
 
-        @keyframes fadeIn {
+        @keyframes fadeInProject {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
@@ -226,11 +228,11 @@
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateX(-50px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateY(0);
             }
         }
 
