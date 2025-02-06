@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TryHackMe Machines - Hacking Ético">
+    <title>TryHackMe Machines</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #4299e1;
+            --card-hover: #3182ce;
+            --card-text: #ffffff;
+            --accent-color: #3182ce;
+            --stripe-height: 60px;
+            --font-primary: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-secondary: 'Georgia', serif;
+            --easy-color: #4ade80;
+            --medium-color: #fbbf24;
+            --hard-color: #f87171;
+        }
+
+        .dark-mode {
+            --bg-color: #18181b;
+            --text-color: #ffffff;
+            --card-bg: #2d3748;
+            --card-hover: #4a5568;
+            --card-text: #ffffff;
+            --accent-color: #2d3748;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.5s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .top-stripe, .bottom-stripe {
+            height: var(--stripe-height);
+            background-color: var(--accent-color);
+            transition: background-color 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: var(--font-secondary);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            color: var(--text-color);
+            width: 100%;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        h1:hover::after {
+            width: 150px;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid var(--accent-color);
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .machines-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .machine {
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-hover) 100%);
+            border-left: 5px solid var(--accent-color);
+            color: var(--card-text);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: slideIn 0.6s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: calc(33.333% - 20px);
+            min-width: 250px;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .machine:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .machine h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+
+        .machine-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .difficulty, .duration {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .difficulty-bar {
+            width: 50px;
+            height: 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .easy { background-color: var(--easy-color); }
+        .medium { background-color: var(--medium-color); }
+        .hard { background-color: var(--hard-color); }
+
+        .duration::before {
+            content: '⏱️';
+            margin-right: 5px;
+        }
+
+        .machine-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        .machine-link {
+            display: inline-block;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .machine-link:hover {
+            background-color: var(--accent-color);
+            color: var(--card-text);
+        }
+
+        .theme-toggle, .home-link {
+            background-color: transparent;
+            border: 2px solid var(--bg-color);
+            color: var(--bg-color);
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 30px;
+            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .theme-toggle:hover, .home-link:hover {
+            background-color: var(--bg-color);
+            color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        .header-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .machine {
+                width: 100%;
+                max-width: none;
+            }
+
+            .machine h2 {
+                font-size: 1.3rem;
+            }
+
+            .machine-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .difficulty, .duration {
+                margin-bottom: 5px;
+            }
+
+            .machine-links {
+                flex-direction: column;
+            }
+
+            .machine-link {
+                margin-bottom: 10px;
+            }
+
+            .theme-toggle, .home-link {
+                font-size: 20px;
+                padding: 3px 10px;
+            }
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-stripe">
+        <a href="hacking-etico.html" class="home-link">🏠</a>
+        <button class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+    <div class="container">
+        <div class="header-container">
+            <h1>TryHackMe Machines</h1>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Buscar máquinas...">
+            </div>
+        </div>
+        <div class="machines-container">
+            <div class="machine">
+                <h2>Basic Pentesting</h2>
+                <div class="machine-info">
+                    <div class="difficulty">
+                        Dificultad: <div class="difficulty-bar easy"></div>
+                    </div>
+                    <div class="duration">1 hora</div>
+                </div>
+                <div class="machine-links">
+                    <a href="#" class="machine-link">Ver solución</a>
+                    <a href="https://tryhackme.com/room/basicpentestingjt" class="machine-link" target="_blank">Ir a TryHackMe</a>
+                </div>
+            </div>
+            <div class="machine">
+                <h2>Vulnversity</h2>
+                <div class="machine-info">
+                    <div class="difficulty">
+                        Dificultad: <div class="difficulty-bar medium"></div>
+                    </div>
+                    <div class="duration">2 horas</div>
+                </div>
+                <div class="machine-links">
+                    <a href="#" class="machine-link">Ver solución</a>
+                    <a href="https://tryhackme.com/room/vulnversity" class="machine-link" target="_blank">Ir a TryHackMe</a>
+                </div>
+            </div>
+            <div class="machine">
+                <h2>Blue</h2>
+                <div class="machine-info">
+                    <div class="difficulty">
+                        Dificultad: <div class="difficulty-bar hard"></div>
+                    </div>
+                    <div class="duration">3 horas</div>
+                </div>
+                <div class="machine-links">
+                    <a href="#" class="machine-link">Ver solución</a>
+                    <a href="https://tryhackme.com/room/blue" class="machine-link" target="_blank">Ir a TryHackMe</a>
+                </div>
+            </div>
+            <!-- Add more machines as needed -->
+        </div>
+    </div>
+
+    <script>
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        const searchInput = document.getElementById('search-input');
+        const machines = document.querySelectorAll('.machine');
+
+        function setTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+            }
+            localStorage.setItem('darkMode', isDark);
+            updateThemeToggleText();
+        }
+
+        function updateThemeToggleText() {
+            themeToggle.textContent = body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = !body.classList.contains('dark-mode');
+            setTheme(isDark);
+        });
+
+        const savedTheme = localStorage.getItem('darkMode');
+        setTheme(savedTheme === 'true');
+
+        // Animation for machines
+        machines.forEach((machine, index) => {
+            machine.style.animationDelay = `${index * 0.2}s`;
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            machines.forEach(machine => {
+                const title = machine.querySelector('h2').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    machine.style.display = 'flex';
+                } else {
+                    machine.style.display = 'none';
+                }
+            });
+        });
+
+        window.addEventListener('load', () => {
+            if (document.querySelector('.loader')) {
+                document.querySelector('.loader').classList.add('hidden');
+            }
+        });
+    </script>
+
+    <div id="particles-js"></div>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80 },
+                color: { value: getComputedStyle(document.documentElement).getPropertyValue('--accent-color') },
+                opacity: { value: 0.5 },
+                size: { value: 3 },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: getComputedStyle(document.documentElement).getPropertyValue('--accent-color'),
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2
+                }
+            }
+        });
+    </script>
+</body>
+</html>
