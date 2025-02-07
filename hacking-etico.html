@@ -193,7 +193,36 @@
             padding-left: 20px;
         }
 
-        .theme-toggle, .home-link {
+        .theme-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: var(--bg-color);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .switch-handle {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 26px;
+            height: 26px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .dark-mode .switch-handle {
+            transform: translateX(30px);
+        }
+
+        .back-link {
             background-color: transparent;
             border: 2px solid var(--bg-color);
             color: var(--bg-color);
@@ -207,7 +236,7 @@
             text-decoration: none;
         }
 
-        .theme-toggle:hover, .home-link:hover {
+        .back-link:hover {
             background-color: var(--bg-color);
             color: var(--accent-color);
             transform: scale(1.05);
@@ -252,9 +281,18 @@
                 padding: 15px;
             }
 
-            .theme-toggle, .home-link {
-                font-size: 20px;
-                padding: 3px 10px;
+            .theme-switch {
+                width: 50px;
+                height: 25px;
+            }
+
+            .switch-handle {
+                width: 21px;
+                height: 21px;
+            }
+
+            .dark-mode .switch-handle {
+                transform: translateX(25px);
             }
         }
 
@@ -276,8 +314,10 @@
 </head>
 <body>
     <div class="top-stripe">
-        <a href="index.html" class="home-link">🏠</a>
-        <button class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+        <a href="index.html" class="back-link">←</a>
+        <div class="theme-switch" role="button" aria-label="Cambiar tema">
+            <div class="switch-handle">🌙</div>
+        </div>
     </div>
     <div class="container">
         <h1>Hacking Ético</h1>
@@ -311,24 +351,22 @@
     </div>
 
     <script>
-        const themeToggle = document.querySelector('.theme-toggle');
+        const themeSwitch = document.querySelector('.theme-switch');
+        const switchHandle = document.querySelector('.switch-handle');
         const body = document.body;
 
         function setTheme(isDark) {
             if (isDark) {
                 body.classList.add('dark-mode');
+                switchHandle.textContent = '☀️';
             } else {
                 body.classList.remove('dark-mode');
+                switchHandle.textContent = '🌙';
             }
             localStorage.setItem('darkMode', isDark);
-            updateThemeToggleText();
         }
 
-        function updateThemeToggleText() {
-            themeToggle.textContent = body.classList.contains('dark-mode') ? '☀️' : '🌙';
-        }
-
-        themeToggle.addEventListener('click', () => {
+        themeSwitch.addEventListener('click', () => {
             const isDark = !body.classList.contains('dark-mode');
             setTheme(isDark);
         });
