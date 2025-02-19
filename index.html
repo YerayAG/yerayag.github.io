@@ -41,6 +41,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
         }
 
         .top-stripe, .bottom-stripe {
@@ -64,10 +66,8 @@
             padding: 20px;
             display: flex;
             flex-grow: 1;
-            animation: none;
-            opacity: 1;
-            transform: none;
-            animation: slideUp 0.8s ease forwards;
+            align-items: center;
+            justify-content: center;
         }
 
         @keyframes slideUp {
@@ -85,82 +85,35 @@
             gap: 50px;
         }
 
-        .header {
-            flex: 1;
-            padding-right: 40px;
-            text-align: center;
-        }
-
-        h1 {
-            font-family: var(--font-secondary);
-            letter-spacing: -0.5px;
-            font-size: 2rem;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background-color: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        h1:hover::after {
-            width: 150px;
-        }
-
-        h2 {
-            font-size: 1.3rem;
-            color: #666;
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
         .subjects {
-            flex: 1;
-            max-width: 550px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(250px, 300px));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+            justify-content: center;
         }
 
         .subject-card {
-            background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-hover) 100%);
-            border-left: 5px solid var(--accent-color);
-            color: var(--card-text);
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
             padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-hover) 100%);
+            color: var(--card-text);
+            text-decoration: none;
+            font-weight: 500;
             font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-            text-align:center;
-            width :100%;
-            text-decoration:none;
-            display:block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            animation: fadeInCard 0.5s ease-out forwards;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        @keyframes fadeInCard {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .subject-card::before {
@@ -170,24 +123,38 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255,255,255,0.1),
+                transparent
+            );
             transform: translateX(-100%);
             transition: 0.5s;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
         .subject-card:hover::before {
             transform: translateX(100%);
         }
 
-        .subject-card:hover {
-            background: linear-gradient(135deg, var(--card-hover) 0%, var(--card-bg) 100%);
-            border-left-width: 10px;
-            transform :scale(1.05);
-            box-shadow :0 6px 12px rgba(0,0,0,0.15);
+        .theme-transition-overlay {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+            width: 200vmax;
+            height: 200vmax;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .subject-card :active {
-            transform :scale(0.95);
+        .theme-transition-overlay.active {
+            transform: translate(-50%, -50%) scale(1);
         }
 
         .theme-switch {
@@ -324,72 +291,21 @@
         }
 
         @media (max-width: 1024px) {
-            .container {
-                padding: 30px 15px;
-            }
-
-            .content {
-                gap: 60px;
-            }
-
-            .subject-card {
-                padding: 25px;
-                font-size: 1.2rem;
+            .subjects {
+                grid-template-columns: repeat(2, minmax(250px, 300px));
+                gap: 15px;
             }
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 15px 10px;
-            }
-
-            .content {
-                flex-direction: column;
-                align-items: center;
-                gap: 30px;
-            }
-            
-            .header {
-                width: 100%;
-                max-width: none;
-                padding-right: 0;
-                margin-bottom: 0;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-                white-space: normal;
-                margin-bottom: 15px;
-            }
-
-            h2 {
-                font-size: 1.1rem;
-                color: var(--text-color);
-            }
-
             .subjects {
-                width: 100%;
-                max-width: 100%;
+                grid-template-columns: repeat(1, minmax(250px, 300px));
+                gap: 15px;
+                margin: 10px auto;
             }
 
             .subject-card {
-                padding: 15px;
-                font-size: 1.1rem;
-                margin-bottom: 12px;
-            }
-
-            .theme-switch {
-                width: 50px;
-                height: 25px;
-            }
-
-            .switch-handle {
-                width: 21px;
-                height: 21px;
-            }
-
-            :root {
-                --stripe-height: 50px;
+                height: 140px;
             }
         }
 
@@ -498,6 +414,54 @@
             z-index: -1;
             opacity: 0.1;
         }
+
+        .container, .top-stripe {
+            position: relative;
+            z-index: 1;
+        }
+
+        .top-stripe {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .brand-name {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px 15px;
+            border: 2px solid var(--bg-color);
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--bg-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box::placeholder {
+            color: var(--bg-color);
+            opacity: 0.7;
+        }
+
+        .search-box:focus {
+            outline: none;
+            background-color: var(--bg-color);
+            color: var(--accent-color);
+        }
     </style>
 </head>
 <body>
@@ -505,24 +469,22 @@
         <div class="spinner"></div>
     </div>
     <div class="top-stripe">
+        <a href="index.html" class="brand-name">Yeray Almoguera González</a>
+        <div class="search-container">
+            <input type="search" class="search-box" placeholder="Buscar en todas las asignaturas..." aria-label="Buscar">
+        </div>
         <div class="theme-switch" role="button" aria-label="Cambiar tema">
             <div class="switch-handle">🌙</div>
         </div>
     </div>
     <div class="container">
-        <div class="content">
-            <div class="header">
-                <h1>Yeray Almoguera González</h1>
-                <h2>Ciberseguridad</h2>
-            </div>
-            <div class="subjects">
-                <a href="bastionado.html" class="subject-card">Bastionado de Redes y Sistemas</a>
-                <a href="analisis-forense.html" class="subject-card">Análisis Forense Informático</a>
-                <a href="hacking-etico.html" class="subject-card">Hacking Ético</a>
-                <a href="incidentes.html" class="subject-card">Incidentes de Ciberseguridad</a>
-                <a href="produccion-segura.html" class="subject-card">Puesta en Producción Segura</a>
-                <a href="normativa.html" class="subject-card">Normativa de Ciberseguridad</a>
-            </div>
+        <div class="subjects">
+            <a href="bastionado.html" class="subject-card">Bastionado de Redes y Sistemas</a>
+            <a href="analisis-forense.html" class="subject-card">Análisis Forense Informático</a>
+            <a href="hacking-etico.html" class="subject-card">Hacking Ético</a>
+            <a href="incidentes.html" class="subject-card">Incidentes de Ciberseguridad</a>
+            <a href="produccion-segura.html" class="subject-card">Puesta en Producción Segura</a>
+            <a href="normativa.html" class="subject-card">Normativa de Ciberseguridad</a>
         </div>
     </div>
 
@@ -549,6 +511,7 @@
             setTheme(isDark);
         });
 
+        // Cargar tema inicial
         const savedTheme = localStorage.getItem('darkMode');
         setTheme(savedTheme === 'true');
 
@@ -568,6 +531,46 @@
                 card.style.setProperty('--x', `${x}%`);
                 card.style.setProperty('--y', `${y}%`);
             });
+        });
+
+        // Función de búsqueda
+        const searchBox = document.querySelector('.search-box');
+        
+        searchBox.addEventListener('input', async (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            if (searchTerm.length < 3) return; // Mínimo 3 caracteres
+
+            try {
+                const pages = [
+                    'bastionado.html',
+                    'analisis-forense.html',
+                    'hacking-etico.html',
+                    'incidentes.html',
+                    'produccion-segura.html',
+                    'normativa.html'
+                ];
+
+                const results = await Promise.all(pages.map(async (page) => {
+                    const response = await fetch(page);
+                    const text = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(text, 'text/html');
+                    const content = doc.body.textContent.toLowerCase();
+                    
+                    if (content.includes(searchTerm)) {
+                        return {
+                            page: page,
+                            title: doc.title
+                        };
+                    }
+                    return null;
+                }));
+
+                // Aquí puedes mostrar los resultados en un dropdown o modal
+                console.log(results.filter(r => r !== null));
+            } catch (error) {
+                console.error('Error en la búsqueda:', error);
+            }
         });
     </script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
