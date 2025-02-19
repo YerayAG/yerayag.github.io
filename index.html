@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yeray Almoguera González</title>
+    <meta name="description" content="Sitio web personal de Yeray Almoguera González con información sobre ciberseguridad y temas relacionados.">
     <meta name="theme-color" content="#4299e1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -45,19 +46,15 @@
             overflow-x: hidden;
         }
 
-        .top-stripe, .bottom-stripe {
+        .top-stripe {
             height: var(--stripe-height);
             background-color: var(--accent-color);
             transition: background-color 0.3s;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: flex-end;
             padding: 0 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .bottom-stripe {
-            display: none;
         }
 
         .container {
@@ -68,21 +65,6 @@
             flex-grow: 1;
             align-items: center;
             justify-content: center;
-        }
-
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .content {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-            gap: 50px;
         }
 
         .subjects {
@@ -116,45 +98,9 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .subject-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(255,255,255,0.1),
-                transparent
-            );
-            transform: translateX(-100%);
-            transition: 0.5s;
-        }
-
         .subject-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .subject-card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .theme-transition-overlay {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%) scale(0);
-            border-radius: 50%;
-            width: 200vmax;
-            height: 200vmax;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .theme-transition-overlay.active {
-            transform: translate(-50%, -50%) scale(1);
         }
 
         .theme-switch {
@@ -165,6 +111,9 @@
             background-color: var(--bg-color);
             cursor: pointer;
             transition: background-color 0.3s ease;
+            border: none;
+            padding: 0;
+            margin-left: 0;
         }
 
         .switch-handle {
@@ -186,73 +135,165 @@
             transform: translateX(30px);
         }
 
-        @media (max-width: 768px) {
-            .theme-switch {
-                width: 50px;
-                height: 25px;
-            }
-
-            .switch-handle {
-                width: 21px;
-                height: 21px;
-            }
-
-            .dark-mode .switch-handle {
-                transform: translateX(25px);
-            }
+        .search-container {
+            position: relative;
+            width: 200px;
+            margin-right: 20px;
         }
 
-        footer {
-            font-size :0.9rem;
-            color :var(--text-color);
+        .search-box {
+            width: 100%;
+            padding: 8px 35px 8px 15px;
+            border: 2px solid var(--bg-color);
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--bg-color);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
 
-        @media (max-width :768px) {
-            .container {
-                padding :20px 10px;
-            }
+        .search-box::placeholder {
+            color: var(--bg-color);
+            opacity: 0.8;
+        }
 
-            .content {
-                flex-direction :column;
-                align-items:center;
-                gap :60px;
-            }
-            
-            .header {
-                width :100%;
-                max-width:none;
-                padding-right :0;
-                margin-bottom :0;
-                text-align:center;
-            }
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--bg-color);
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
 
-            h1 {
-                font-size :2rem;
-                white-space :normal;
-            }
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-            h2 {
-                font-size :1.2rem;
-            }
+        .search-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
 
-            .theme-switch {
-                width: 50px;
-                height: 25px;
-            }
+        .search-modal {
+            background: var(--bg-color);
+            width: 90%;
+            max-width: 800px;
+            margin: 80px auto;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+        }
 
-            .switch-handle {
-                width: 21px;
-                height: 21px;
-            }
+        .search-modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
 
-            .subject-card {
-                padding :25px;
-                font-size :1.2rem;
-            }
+        .search-modal-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            background: var(--bg-color);
+        }
 
-            :root {
-                --stripe-height :50px;
-            }
+        .close-search {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: none;
+        }
+
+        .close-search:hover {
+            transform: scale(1.1);
+            background: var(--card-hover);
+        }
+
+        .search-results {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 10px 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) transparent;
+        }
+
+        .search-result-item {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--bg-color);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .search-result-item:hover {
+            background: var(--card-bg);
+            color: var(--card-text);
+            transform: translateX(5px);
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .search-result-item:hover .result-title {
+            color: var(--card-text);
+        }
+
+        .result-subject {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-top: 5px;
+        }
+
+        .search-result-item:hover .result-subject {
+            color: var(--card-text);
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.1;
         }
 
         .loader {
@@ -290,6 +331,18 @@
             }
         }
 
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
         @media (max-width: 1024px) {
             .subjects {
                 grid-template-columns: repeat(2, minmax(250px, 300px));
@@ -307,28 +360,25 @@
             .subject-card {
                 height: 140px;
             }
+
+            .theme-switch {
+                width: 50px;
+                height: 25px;
+            }
+
+            .switch-handle {
+                width: 21px;
+                height: 21px;
+            }
+
+            .dark-mode .switch-handle {
+                transform: translateX(25px);
+            }
         }
 
         @media (max-width: 480px) {
             .container {
                 padding: 15px 10px;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-                padding-bottom: 10px;
-            }
-
-            h1::after {
-                width: 80px;
-            }
-
-            h1:hover::after {
-                width: 120px;
-            }
-
-            h2 {
-                font-size: 1rem;
             }
 
             .subject-card {
@@ -337,62 +387,16 @@
                 margin-bottom: 12px;
             }
 
-            .top-stripe, .bottom-stripe {
+            .top-stripe {
                 padding: 0 15px;
             }
 
-            footer {
+            .search-container {
+                width: 150px;
+            }
+
+            .search-box {
                 font-size: 0.8rem;
-                text-align: center;
-            }
-
-            .loader .spinner {
-                width: 40px;
-                height: 40px;
-                border-width: 4px;
-            }
-        }
-
-        @media (max-height: 600px) and (orientation: landscape) {
-            .container {
-                padding: 15px;
-            }
-
-            .content {
-                gap: 30px;
-            }
-
-            h1 {
-                font-size: 1.6rem;
-                margin-bottom: 5px;
-            }
-
-            .subject-card {
-                padding: 15px;
-                margin-bottom: 10px;
-            }
-
-            .top-stripe, .bottom-stripe {
-                height: 40px;
-            }
-        }
-
-        @media (min-width: 1440px) {
-            .container {
-                max-width: 1400px;
-            }
-
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            h2 {
-                font-size: 1.8rem;
-            }
-
-            .subject-card {
-                font-size: 1.2rem;
-                padding: 25px;
             }
         }
 
@@ -405,62 +409,18 @@
             }
         }
 
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            opacity: 0.1;
-        }
-
-        .container, .top-stripe {
-            position: relative;
-            z-index: 1;
-        }
-
-        .top-stripe {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-        }
-
         .brand-name {
-            color: #ffffff;
+            color: var(--card-text);
             font-size: 1.2rem;
             font-weight: 600;
             text-decoration: none;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
-        .search-container {
-            flex: 1;
-            max-width: 500px;
-            margin: 0 20px;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 8px 15px;
-            border: 2px solid var(--bg-color);
-            border-radius: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--bg-color);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .search-box::placeholder {
-            color: var(--bg-color);
-            opacity: 0.7;
-        }
-
-        .search-box:focus {
-            outline: none;
-            background-color: var(--bg-color);
-            color: var(--accent-color);
+        .controls-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
     </style>
 </head>
@@ -470,14 +430,17 @@
     </div>
     <div class="top-stripe">
         <a href="index.html" class="brand-name">Yeray Almoguera González</a>
-        <div class="search-container">
-            <input type="search" class="search-box" placeholder="Buscar en todas las asignaturas..." aria-label="Buscar">
-        </div>
-        <div class="theme-switch" role="button" aria-label="Cambiar tema">
-            <div class="switch-handle">🌙</div>
+        <div class="controls-container">
+            <div class="search-container">
+                <input type="search" class="search-box" placeholder="Buscar..." />
+                <span class="search-icon"></span>
+            </div>
+            <div class="theme-switch" role="button" aria-label="Cambiar tema">
+                <div class="switch-handle">🌙</div>
+            </div>
         </div>
     </div>
-    <div class="container">
+    <main class="container">
         <div class="subjects">
             <a href="bastionado.html" class="subject-card">Bastionado de Redes y Sistemas</a>
             <a href="analisis-forense.html" class="subject-card">Análisis Forense Informático</a>
@@ -486,14 +449,65 @@
             <a href="produccion-segura.html" class="subject-card">Puesta en Producción Segura</a>
             <a href="normativa.html" class="subject-card">Normativa de Ciberseguridad</a>
         </div>
-    </div>
+    </main>
 
     <div id="particles-js"></div>
 
+    <div class="search-overlay" aria-hidden="true">
+        <div class="search-modal" role="dialog" aria-labelledby="search-modal-title">
+            <button class="close-search" aria-label="Cerrar búsqueda">×</button>
+            <div class="search-modal-header">
+                <h2 id="search-modal-title" class="sr-only">Búsqueda avanzada</h2>
+                <input type="search" class="search-modal-input" placeholder="Buscar en todas las asignaturas..." aria-label="Buscar en todas las asignaturas">
+            </div>
+            <div class="search-results" role="region" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         const themeSwitch = document.querySelector('.theme-switch');
         const switchHandle = document.querySelector('.switch-handle');
         const body = document.body;
+        const searchBox = document.querySelector(".search-box");
+        const searchIcon = document.querySelector(".search-icon");
+        const searchOverlay = document.querySelector(".search-overlay");
+        const searchModalInput = document.querySelector(".search-modal-input");
+        const searchResults = document.querySelector(".search-results");
+        const closeSearch = document.querySelector(".close-search");
+
+        const siteData = [
+            {
+                title: "Bastionado de Redes y Sistemas",
+                url: "bastionado.html",
+                content: "Limpieza y aislamiento del sistema operativo. Sistema de autenticación empresarial. Seguridad en redes. Bastionado. Redes. Sistemas. Seguridad. Configuración. Protección."
+            },
+            {
+                title: "Análisis Forense Informático",
+                url: "analisis-forense.html",
+                content: "Windows Forensics. Drug trafficking. Análisis de evidencias digitales. Informática forense. Investigación. Forense. Digital. Evidencias. Análisis."
+            },
+            {
+                title: "Hacking Ético",
+                url: "hacking-etico.html",
+                content: "Pentesting. WebApp Pentesting. Seguridad ofensiva. Vulnerabilidades. Hacking. Ético. Ethical Hacking. Seguridad. Tests."
+            },
+            {
+                title: "Incidentes de Ciberseguridad",
+                url: "incidentes.html",
+                content: "Gestión de incidentes. Respuesta a incidentes. CSIRT. Análisis de malware. Incidentes. Ciberseguridad. Seguridad. Malware. Amenazas."
+            },
+            {
+                title: "Puesta en Producción Segura",
+                url: "produccion-segura.html",
+                content: "Desarrollo seguro. DevSecOps. SDLC. Seguridad Web. Producción. Segura. Desarrollo. Aplicaciones. Seguridad."
+            },
+            {
+                title: "Normativa de Ciberseguridad",
+                url: "normativa.html",
+                content: "ISO 27001. GDPR. ENS. Compliance. Normativa. Ciberseguridad. Legal. Regulación. Estándares. Seguridad."
+            }
+        ];
 
         function setTheme(isDark) {
             if (isDark) {
@@ -511,7 +525,7 @@
             setTheme(isDark);
         });
 
-        // Cargar tema inicial
+        // Load initial theme
         const savedTheme = localStorage.getItem('darkMode');
         setTheme(savedTheme === 'true');
 
@@ -523,77 +537,110 @@
             card.style.animationDelay = `${index * 0.1}s`;
         });
 
-        document.querySelectorAll('.subject-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / card.offsetWidth) * 100;
-                const y = ((e.clientY - rect.top) / card.offsetHeight) * 100;
-                card.style.setProperty('--x', `${x}%`);
-                card.style.setProperty('--y', `${y}%`);
+        function performSearch(searchTerm) {
+            if (searchTerm.length < 3) {
+                searchResults.innerHTML = '<div class="search-result-item">Escribe al menos 3 caracteres...</div>';
+                return;
+            }
+
+            const results = siteData.filter(item => {
+                const searchTerms = searchTerm.toLowerCase().split(' ');
+                return searchTerms.every(term => 
+                    item.title.toLowerCase().includes(term) ||
+                    item.content.toLowerCase().includes(term)
+                );
             });
+
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item">No se encontraron resultados</div>';
+                return;
+            }
+
+            searchResults.innerHTML = results
+                .map(result => `
+                    <div class="search-result-item" onclick="window.location.href='${result.url}'">
+                        <div class="result-title">${result.title}</div>
+                        <div class="result-subject">Encontrado en: ${getSearchContext(result.content, searchTerm)}</div>
+                    </div>
+                `).join('');
+        }
+
+        function getSearchContext(text, searchTerm) {
+            const index = text.toLowerCase().indexOf(searchTerm.toLowerCase());
+            const start = Math.max(0, index - 30);
+            const end = Math.min(text.length, index + searchTerm.length + 30);
+            let excerpt = text.substring(start, end);
+            
+            if (start > 0) excerpt = "..." + excerpt;
+            if (end < text.length) excerpt += "...";
+            
+            return excerpt;
+        }
+
+        searchIcon.addEventListener("click", () => {
+            searchOverlay.style.display = "flex";
+            searchOverlay.classList.add("active");
+            searchModalInput.focus();
+            searchModalInput.value = searchBox.value;
         });
 
-        // Función de búsqueda
-        const searchBox = document.querySelector('.search-box');
-        
-        searchBox.addEventListener('input', async (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            if (searchTerm.length < 3) return; // Mínimo 3 caracteres
+        searchBox.addEventListener("click", () => {
+            searchOverlay.style.display = "flex";
+            searchOverlay.classList.add("active");
+            searchModalInput.focus();
+            searchModalInput.value = searchBox.value;
+        });
 
-            try {
-                const pages = [
-                    'bastionado.html',
-                    'analisis-forense.html',
-                    'hacking-etico.html',
-                    'incidentes.html',
-                    'produccion-segura.html',
-                    'normativa.html'
-                ];
+        closeSearch.addEventListener("click", () => {
+            searchOverlay.classList.remove("active");
+            setTimeout(() => {
+                searchOverlay.style.display = "none";
+                searchResults.innerHTML = "";
+                searchModalInput.value = "";
+                searchBox.value = "";
+            }, 300);
+        });
 
-                const results = await Promise.all(pages.map(async (page) => {
-                    const response = await fetch(page);
-                    const text = await response.text();
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(text, 'text/html');
-                    const content = doc.body.textContent.toLowerCase();
-                    
-                    if (content.includes(searchTerm)) {
-                        return {
-                            page: page,
-                            title: doc.title
-                        };
+        searchModalInput.addEventListener("input", (e) => {
+            performSearch(e.target.value.trim());
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && searchOverlay.classList.contains("active")) {
+                closeSearch.click();
+            }
+        });
+
+        searchOverlay.addEventListener("click", (e) => {
+            if (e.target === searchOverlay) {
+                closeSearch.click();
+            }
+        });
+
+        // Check if particlesJS is defined before using it
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80 },
+                    color: { value: getComputedStyle(document.documentElement).getPropertyValue('--accent-color') },
+                    opacity: { value: 0.5 },
+                    size: { value: 3 },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: getComputedStyle(document.documentElement).getPropertyValue('--accent-color'),
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2
                     }
-                    return null;
-                }));
-
-                // Aquí puedes mostrar los resultados en un dropdown o modal
-                console.log(results.filter(r => r !== null));
-            } catch (error) {
-                console.error('Error en la búsqueda:', error);
-            }
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80 },
-                color: { value: getComputedStyle(document.documentElement).getPropertyValue('--accent-color') },
-                opacity: { value: 0.5 },
-                size: { value: 3 },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: getComputedStyle(document.documentElement).getPropertyValue('--accent-color'),
-                    opacity: 0.4,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2
                 }
-            }
-        });
+            });
+        } else {
+            console.warn('particlesJS is not defined. Make sure the particles.js library is included.');
+        }
     </script>
 </body>
 </html>
